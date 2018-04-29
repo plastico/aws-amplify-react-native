@@ -1,0 +1,66 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.google.gms:google-services:3.1.1'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven {
+            url 'https://maven.google.com'
+        }
+    }
+}
+
+apply plugin: "com.android.library"
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.2"
+
+    defaultConfig {
+        minSdkVersion 22
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+        ndk {
+            abiFilters "armeabi-v7a", "x86"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "com.android.support:appcompat-v7:27.0.2"
+
+    api ('com.google.firebase:firebase-messaging:11.8.0'){
+        force = true;
+    }
+    api ('com.google.firebase:firebase-core:11.8.0'){
+        force = true;
+    }
+    implementation 'com.firebase:firebase-jobdispatcher:0.6.0'
+
+    implementation('com.amazonaws:aws-android-sdk-auth-core:2.6.+@aar') {
+        transitive = false;
+    }
+    implementation('com.amazonaws:aws-android-sdk-mobile-client:2.6.+@aar') {
+        transitive = false;
+    }
+    implementation 'com.facebook.react:react-native:+'
+
+}
